@@ -1923,6 +1923,8 @@ the calling uid, and root would write root-owned files into your content"
     -e SPARK_STATIC_VRAM
     -e SPARK_RESERVE_VRAM
     -e SPARK_ATTENTION
+    -e UV_INDEX_URL="${UV_INDEX_URL:-https://mirrors.aliyun.com/pypi/simple/}"
+    -e PIP_INDEX_URL="${PIP_INDEX_URL:-https://mirrors.aliyun.com/pypi/simple/}"
   )
   # The node list is a script-adjacent config file like the patch list, not
   # user content, so it is mounted directly rather than going through the
@@ -1931,6 +1933,8 @@ the calling uid, and root would write root-owned files into your content"
   # the entrypoint says so and moves on.
   [[ -f "$NODES_LIST" ]] \
     && CRUN_ARGS+=(-v "$NODES_LIST:/opt/spark/comfyui-nodes.list:ro")
+  [[ -f "$BASE_DIR/container/entrypoint.sh" ]] \
+    && CRUN_ARGS+=(-v "$BASE_DIR/container/entrypoint.sh:/opt/spark/entrypoint.sh:ro")
   _content_mount_args
   CRUN_ARGS+=("${CMOUNT_ARGS[@]}")
 }

@@ -42,6 +42,12 @@ cd "$INSTALL_DIR"
 # reason: uv's resolver is stricter, and a node with sloppy pins that pip
 # tolerates must not be what stops the server from starting.
 UV="$(command -v uv || true)"
+export UV_INDEX_URL="${UV_INDEX_URL:-https://mirrors.aliyun.com/pypi/simple/}"
+export PIP_INDEX_URL="${PIP_INDEX_URL:-https://mirrors.aliyun.com/pypi/simple/}"
+git config --global url."https://gh-proxy.com/https://github.com/".insteadOf "https://github.com/" 2>/dev/null || true
+pip config set global.index-url "$PIP_INDEX_URL" 2>/dev/null || true
+mkdir -p "$HOME/.config/uv" 2>/dev/null || true
+printf '[pip]\nindex-url = "%s"\n' "$UV_INDEX_URL" > "$HOME/.config/uv/uv.toml" 2>/dev/null || true
 INSTALLER="pip"
 [[ -n "$UV" ]] && INSTALLER="uv"
 py_install() {
