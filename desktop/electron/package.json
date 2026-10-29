@@ -1,0 +1,13 @@
+{
+  "name": "spark-comfyui-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone Electron shell for Spark ComfyUI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "44.9.0"
+  }
+}
